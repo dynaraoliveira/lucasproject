@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  chave: MyString
+  sensor0: 1
+  sensor1: 1
+  sensor2: 1
+  sensor3: 1
+  sensor4: 1
+  sensor5: 1
+
+two:
+  chave: MyString
+  sensor0: 1
+  sensor1: 1
+  sensor2: 1
+  sensor3: 1
+  sensor4: 1
+  sensor5: 1
