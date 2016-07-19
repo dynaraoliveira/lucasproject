@@ -31,9 +31,9 @@ class SensorsController < ApplicationController
     @s3 = params[:s3]
     @s4 = params[:s4]
     @s5 = params[:s5]
+    @data = params[:data]
     
-    
-    @sensor = Sensor.create(chave: @chave, sensor0: @s0, sensor1: @s1, sensor2: @s2, sensor3: @s3, sensor4: @s4, sensor5: @s5)
+    @sensor = Sensor.create(chave: @chave, sensor0: @s0, sensor1: @s1, sensor2: @s2, sensor3: @s3, sensor4: @s4, sensor5: @s5, datainclusao: @data)
   
     respond_to do |format|
       if @sensor

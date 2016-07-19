@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719020728) do
+ActiveRecord::Schema.define(version: 20160719033830) do
 
   create_table "sensors", force: :cascade do |t|
     t.string   "chave"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20160719020728) do
     t.integer  "sensor3"
     t.integer  "sensor4"
     t.integer  "sensor5"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.datetime "datainclusao"
   end
 
 end
