@@ -12,7 +12,7 @@
       ['Hora', 'Potência'],
       
       <% @sensors.each do |sensor| %>
-      [<% sensor.data %> ,  <%= sensor.sensor0 %> ],
+      [<% sensor.datainclusao.strftime(%H:%M) %> ,  <%= sensor.sensor0 %> ],
       <% end %>
       
     ]);
