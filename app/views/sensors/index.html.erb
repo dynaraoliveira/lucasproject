@@ -9,10 +9,39 @@
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       
-      ['Hora', 'Potência'],
+      ['Hora', 'Potência1', 'Potência2', 'Potência3' ],
       
-      <% @sensors.each do |sensor| %>
-      [<% sensor.datainclusao.strftime(%H:%M) %> ,  <%= sensor.sensor0 %> ],
+      <% @sensors.each do |sensor| 
+      
+      @cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      @cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      @cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+      
+      @cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
+      @cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+      @cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      
+      @ts0 = @cs0 * @cs3
+      @ts1 = @cs1 * @cs4
+      @ts2 = @cs2 * @cs5
+      
+      @hora =  sensor.datainclusao.strftime("%H")
+      
+      %>
+      
+        <% case @hora %>
+        <% when 0 .. 5 %>
+          [ '05:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
+        <% when 6 .. 9 %>
+          [ '09:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
+        <% when 10 .. 13 %>
+          [ '13:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
+        <% when 14 .. 17 %>
+          [ '17:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
+        <% when 18 .. 21 %>
+          [ '21:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
+        <% end %>
+      
       <% end %>
       
     ]);
