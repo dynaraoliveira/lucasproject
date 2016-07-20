@@ -11,7 +11,9 @@
       
       ['Hora', 'Potência1', 'Potência2', 'Potência3' ],
 
-      <% @sensors.each do |sensor| 
+
+      <% 
+      @sensors.each do |sensor| 
             
       @cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
       @cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
@@ -42,6 +44,8 @@
       <%= @aaaa %>,
       
       <% end %>      
+      
+      [21,0,0,0]
       
     ]);
 

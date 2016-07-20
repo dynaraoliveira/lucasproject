@@ -1,2 +1,3 @@
 class Sensor < ApplicationRecord
+    
 end
