@@ -10,9 +10,9 @@
     var data = google.visualization.arrayToDataTable([
       
       ['Hora', 'Potência1', 'Potência2', 'Potência3' ],
-      
+
       <% @sensors.each do |sensor| 
-      
+            
       @cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
       @cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
       @cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
@@ -25,30 +25,29 @@
       @ts1 = @cs1 * @cs4
       @ts2 = @cs2 * @cs5
       
-      @hora =  sensor.datainclusao.strftime("%H")
+      @hora =  sensor.datainclusao.hour
       
+      case @hora
+      when 0..5
+      @aaaa = [5,@ts0.to_i,@ts1.to_i,@ts2.to_i]
+      when 6..10 
+      @aaaa = [10,@ts0.to_i,@ts1.to_i,@ts2.to_i]
+      when 7..15 
+      @aaaa = [15,@ts0.to_i,@ts1.to_i,@ts2.to_i]
+      when 16..20 
+      @aaaa = [20,@ts0.to_i,@ts1.to_i,@ts2.to_i]
+      end
       %>
       
-        <% case @hora %>
-        <% when 0 .. 5 %>
-          [ '05:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
-        <% when 6 .. 9 %>
-          [ '09:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
-        <% when 10 .. 13 %>
-          [ '13:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
-        <% when 14 .. 17 %>
-          [ '17:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
-        <% when 18 .. 21 %>
-          [ '21:00' ,  <%= @ts0 %> , <%= @ts1 %> ,  <%= @ts2 %> ],
-        <% end %>
+      <%= @aaaa %>,
       
-      <% end %>
+      <% end %>      
       
     ]);
 
     var options = {
-      title: 'Company Performance',
-      hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+      title: 'Potência',
+      hAxis: {title: 'Horas',  titleTextStyle: {color: '#333'}},
       vAxis: {minValue: 0}
     };
 
@@ -58,6 +57,31 @@
 </script>
 
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+
+<% @sensors.each do |sensor| 
+      
+@cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+@cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+@cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+
+@cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
+@cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+@cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+
+@ts0 = @cs0 * @cs3
+@ts1 = @cs1 * @cs4
+@ts2 = @cs2 * @cs5
+
+@hora =  sensor.datainclusao.hour
+
+@aaaa = [@hora,@ts0.to_i,@ts1.to_i,@ts2.to_i]
+
+%>
+
+<%= @aaaa %>
+
+<% end %>
 
 <table>
   <thead>
