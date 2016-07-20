@@ -11,9 +11,8 @@
       
       ['Hora','Potência1','Potência2','Potência3'],
 
-      [0,0,0,0],
+      ['00:00',0,0,0],
       
-       
       <% @sensors.each do |sensor| %>
             
       <% @cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707 %>
@@ -31,21 +30,23 @@
       <% @hora =  sensor.datainclusao.hour %>
       
       <% case @hora %>
-      <% when 0..5 %>
-      <% @aaaa = [5,@ts0.to_i,@ts1.to_i,@ts2.to_i] %>
-      <% when 6..10 %>
-      <% @aaaa = [10,@ts0.to_i,@ts1.to_i,@ts2.to_i] %>
-      <% when 7..15 %>
-      <% @aaaa = [15,@ts0.to_i,@ts1.to_i,@ts2.to_i] %>
-      <% when 16..20 %>
-      <% @aaaa = [20,@ts0.to_i,@ts1.to_i,@ts2.to_i] %>
+      <% when 5 %>
+      ['05:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
+      <% when 10 %>
+      ['10:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
+      <% when 15 %>
+      ['15:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
+      <% when 20 %>
+      ['20:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
+      <% else %>
+      [' ',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
       <% end %>
       
-      <%= @aaaa %>,
+      
       
       <% end %>      
       
-      [21,0,0,0]
+      ['21:00',0,0,0]
       
     ]);
 
