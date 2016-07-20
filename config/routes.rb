@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-  resources :sensors
-  
-  match 'incluir' => 'sensors#create', :via => [:get, :post]
   
   root 'application#hello'
+  
+  resources :sensors
+  
+  namespace :api , defaults: {format: :json} do 
+    namespace :v1 do 
+      resources :sensors
+    end 
+  end
 end

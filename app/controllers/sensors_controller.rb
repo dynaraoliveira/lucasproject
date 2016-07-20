@@ -25,26 +25,25 @@ class SensorsController < ApplicationController
   # POST /sensors
   # POST /sensors.json
   def create
-    @chave = params[:chave]
-    @s0 = params[:s0]
-    @s1 = params[:s1]
-    @s2 = params[:s2]
-    @s3 = params[:s3]
-    @s4 = params[:s4]
-    @s5 = params[:s5]
-    @data = params[:data]
-    
-    @sensor = Sensor.create(chave: @chave, sensor0: @s0, sensor1: @s1, sensor2: @s2, sensor3: @s3, sensor4: @s4, sensor5: @s5, datainclusao: @data)
+    @sensor = Sensor.new(sensor_params)
   
-    respond_to do |format|
-      if @sensor
-        format.html { redirect_to @sensor, notice: 'Sensor was successfully created.' }
-        format.json { render :show, status: :created, location: @sensor }
-      else
-        format.html { render :new }
-        format.json { render json: @sensor.errors, status: :unprocessable_entity }
-      end
+    if @sensor.save
+      render json: @sensor
+    else
+      render json: @sensor.errors
     end
+  
+  #  @sensor = Sensor.new(sensor_params)
+  
+  #  respond_to do |format|
+  #    if @sensor.save
+  #      format.html { redirect_to @sensor, notice: 'Sensor was successfully created.' }
+  #      format.json { render :show, status: :created, location: @sensor }
+  #    else
+  #      format.html { render :new }
+  #      format.json { render json: @sensor.errors, status: :unprocessable_entity }
+  #    end
+  #  end
   end
 
   # PATCH/PUT /sensors/1
@@ -65,4 +64,8 @@ class SensorsController < ApplicationController
       @sensor = Sensor.find(params[:id])
     end
     
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def sensor_params
+      params.require(:sensor).permit(:chave,:s0,:s1,:s2,:s3,:s4,:s5,:data)
+    end
 end

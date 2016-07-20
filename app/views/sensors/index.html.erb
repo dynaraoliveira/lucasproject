@@ -28,23 +28,11 @@
       <% @ts2 = @cs2 * @cs5 %>
       
       <% @hora =  sensor.datainclusao.hour %>
+      <% @time = sensor.datainclusao.strftime("%H:%M:%S") %>
       
-      <% case @hora %>
-      <% when 5 %>
-      ['05:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
-      <% when 10 %>
-      ['10:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
-      <% when 15 %>
-      ['15:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
-      <% when 20 %>
-      ['20:00',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
-      <% else %>
-      [' ',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
+      ['<%= @time %>',<%= @ts0.to_i %>,<%= @ts1.to_i %>,<%= @ts2.to_i %>],
+    
       <% end %>
-      
-      
-      
-      <% end %>      
       
       ['21:00',0,0,0]
       
