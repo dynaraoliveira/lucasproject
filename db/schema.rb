@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719033830) do
+ActiveRecord::Schema.define(version: 20160722034829) do
 
   create_table "sensors", force: :cascade do |t|
-    t.string   "chave"
+    t.text     "chave"
     t.integer  "sensor0"
     t.integer  "sensor1"
     t.integer  "sensor2"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20160719033830) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.datetime "datainclusao"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
