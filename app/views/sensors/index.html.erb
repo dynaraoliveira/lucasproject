@@ -64,7 +64,9 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
+  
+  <%= date_select :sensor, :datainclusao %>
+  
   <tbody>
     <% @sensors.each do |sensor| %>
       <tr>
