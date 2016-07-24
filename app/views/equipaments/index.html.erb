@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Equipaments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Chave</th>
+      <th>Nome</th>
+      <th>Cidade</th>
+      <th>Estado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @equipaments.each do |equipament| %>
+      <tr>
+        <td><%= equipament.chave %></td>
+        <td><%= equipament.nome %></td>
+        <td><%= equipament.cidade %></td>
+        <td><%= equipament.estado %></td>
+        <td><%= link_to 'Show', equipament %></td>
+        <td><%= link_to 'Edit', edit_equipament_path(equipament) %></td>
+        <td><%= link_to 'Destroy', equipament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Equipament', new_equipament_path %>
