@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:success] = "Usuário incluído com sucesso!"
-      redirect_to controller: 'sensors', action: 'index'
+      redirect_to root_url
     else
       render 'new'
     end
