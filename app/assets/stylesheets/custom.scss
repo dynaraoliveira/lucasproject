@@ -6,6 +6,12 @@
 body {
   position: relative;
   padding-top: 60px;
+  background-image: url("back.jpg");
+  background-position: center center;
+	background-repeat:  no-repeat;
+	background-attachment: fixed;
+	background-size:  cover;
+	background-color: #999;
 }
 
 /* mixins, variables, etc. */
@@ -92,7 +98,6 @@ footer {
   left: 0;
   width: 100%;
   box‐sizing: border‐box;
-  
 }
 
 footer a {
@@ -104,11 +109,11 @@ footer a:hover {
 }
 
 footer small {
-  float: left;
+  float: right;
 }
 
 footer ul {
-  float: right;
+  float: left;
   list-style: none;
 }
 
