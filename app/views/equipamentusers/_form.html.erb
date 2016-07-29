@@ -1,0 +1,13 @@
+<%= form_for(equipamentuser) do |f| %>
+
+  <%= render 'shared/equipamentusers_error_messages' %>
+  
+  <%= f.label "Equipamento" %>
+  <%= f.select :equipament_id, Equipament.all.collect { |p| [ p.nome, p.id ] } %>
+  
+  <%= f.label "Usuário" %>
+  <%= f.select :user_id, User.all.collect { |p| [ p.name, p.id ] } %>
+
+  <%= f.submit "Associar", class: "btn btn-primary" %>
+  
+<% end %>

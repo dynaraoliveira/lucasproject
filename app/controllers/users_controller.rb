@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :authorize_user
   def new
     @user = User.new
   end
@@ -18,5 +19,11 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :usertype)
+    end
+    
+    def authorize_user
+      unless current_user
+        redirect_to root_path
+      end
     end
 end

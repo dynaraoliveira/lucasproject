@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Equipamento:</strong>
+  <%= @equipamentuser.equipament.nome %>
+</p>
+
+<p>
+  <strong>Usuário:</strong>
+  <%= @equipamentuser.user.name %>
+</p>
+
+<%= link_to 'Edit', edit_equipamentuser_path(@equipamentuser) %> |
+<%= link_to 'Back', equipamentusers_path %>

@@ -1,4 +1,5 @@
 class EquipamentsController < ApplicationController
+  before_filter :authorize_user
   before_action :set_equipament, only: [:show, :edit, :update, :destroy]
 
   # GET /equipaments
@@ -10,6 +11,7 @@ class EquipamentsController < ApplicationController
   # GET /equipaments/1
   # GET /equipaments/1.json
   def show
+    @equipament = Equipament.find(params[:id])
   end
 
   # GET /equipaments/new
@@ -25,7 +27,7 @@ class EquipamentsController < ApplicationController
   # POST /equipaments.json
   def create
     @equipament = Equipament.new(equipament_params)
-
+    
     respond_to do |format|
       if @equipament.save
         format.html { redirect_to @equipament, notice: 'Equipament was successfully created.' }
@@ -70,5 +72,11 @@ class EquipamentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipament_params
       params.require(:equipament).permit(:chave, :nome, :cidade, :estado)
+    end
+    
+    def authorize_user
+      unless current_user
+        redirect_to root_path
+      end
     end
 end

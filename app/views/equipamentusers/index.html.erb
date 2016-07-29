@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Associações</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Equipamento</th>
+      <th>Usuário</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @equipamentusers.each do |equipamentuser| %>
+      <tr>
+        <td><%= equipamentuser.equipament.nome %></td>
+        <td><%= equipamentuser.user.name %></td>
+        <td><%= link_to 'Excluir', equipamentuser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Incluir associação', new_equipamentuser_path %>

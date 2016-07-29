@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724190636) do
+ActiveRecord::Schema.define(version: 20160728035000) do
 
   create_table "equipaments", force: :cascade do |t|
     t.string   "chave"
@@ -21,8 +21,17 @@ ActiveRecord::Schema.define(version: 20160724190636) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equipamentusers", force: :cascade do |t|
+    t.integer  "equipament_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["equipament_id"], name: "index_equipamentusers_on_equipament_id"
+    t.index ["user_id"], name: "index_equipamentusers_on_user_id"
+  end
+
   create_table "sensors", force: :cascade do |t|
-    t.text     "chave"
+    t.string   "chave"
     t.integer  "sensor0"
     t.integer  "sensor1"
     t.integer  "sensor2"
