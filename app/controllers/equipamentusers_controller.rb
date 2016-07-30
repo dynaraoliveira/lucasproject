@@ -5,11 +5,12 @@ class EquipamentusersController < ApplicationController
   # GET /equipaments
   # GET /equipaments.json
   def index
-    if current_user.usertype = 'A'
-      @equipamentusers = Equipamentuser.all
-    else
+    @equipamentusers = Equipamentuser.all
+    #if current_user.usertype = 'A'
+      #@equipamentusers = Equipamentuser.all
+    #else
       #@equipamentusers = Equipamentuser.where(:user_id = current_user.user_id)
-    end
+    #end
   end
 
   # GET /equipaments/1
