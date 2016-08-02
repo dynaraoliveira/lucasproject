@@ -1,18 +1,21 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "myhomeino", root_path, id: "logo" %>
+    <%= link_to "homeino", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <%= current_user.name %> <%= current_user.usertype %> <b class="caret"></b>
+              <%= current_user.name %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <% if current_user.usertype == 'A' %>
+              <% if session[:user_type] == 'A' %>
               <li><%= link_to "Novo usuário", users_new_path %></li>
               <li><%= link_to "Novo equipamento", new_equipament_path %></li>
-              <li><%= link_to "Associações", new_equipamentuser_path %></li>
+              <li><%= link_to "Incluir associações", new_equipamentuser_path %></li>
+              <li><%= link_to "Lista de equipamentos", equipamentusers_path %></li>
+              <% else %>
+              <li><%= link_to "Meus equipamentos", equipamentusers_path %></li>
               <% end %>
               <li class="divider"></li>
               <li><%= link_to "Log out", logout_path, method: "delete" %></li>
