@@ -1,6 +1,12 @@
-<h1>Editing equipamentuser</h1>
+<% provide(:title, 'Associar equipamentos') %>
 
-<%= render 'form', : @equipamentuser %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
 
-<%= link_to 'Show', @equipamentuser %> |
-<%= link_to 'Back', equipamentusers_path %>
+    <h1>Associar</h1>
+
+    <%= render 'form', : @equipamentuser %>
+
+    <%= link_to 'Voltar', equipamentusers_path %>
+  </div>
+</div>

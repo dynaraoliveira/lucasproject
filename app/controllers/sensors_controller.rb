@@ -5,7 +5,7 @@ class SensorsController < ApplicationController
   # GET /sensors.json
   def index
     #@sensors = Sensor.where(premium: true).order("created_at DESC").all
-    @sensors = Sensor.order("datainclusao").all
+    @sensors = Sensor.where(chave: params[:chave]).order("datainclusao").all
   end
 
   # GET /sensors/1
@@ -25,13 +25,13 @@ class SensorsController < ApplicationController
   # POST /sensors
   # POST /sensors.json
   def create
-    @sensor = Sensor.new(sensor_params)
+  #  @sensor = Sensor.new(sensor_params)
   
-    if @sensor.save
-      render json: @sensor
-    else
-      render json: @sensor.errors
-    end
+  #  if @sensor.save
+  #    render json: @sensor
+  #  else
+  #    render json: @sensor.errors
+  #  end
   
   #  @sensor = Sensor.new(sensor_params)
   

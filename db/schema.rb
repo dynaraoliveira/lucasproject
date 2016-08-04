@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801041642) do
+ActiveRecord::Schema.define(version: 20160804015742) do
 
   create_table "equipaments", force: :cascade do |t|
     t.string   "chave"
@@ -39,11 +39,10 @@ ActiveRecord::Schema.define(version: 20160801041642) do
     t.integer  "sensor3"
     t.integer  "sensor4"
     t.integer  "sensor5"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.datetime "datainclusao"
-    t.integer  "equipament_id"
-    t.index ["equipament_id"], name: "index_sensors_on_equipament_id", unique: true
+    t.index ["chave"], name: "index_sensors_on_chave"
   end
 
   create_table "users", force: :cascade do |t|

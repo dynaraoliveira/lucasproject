@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Associações</h1>
-
 <table>
   <thead>
     <tr>
@@ -14,7 +12,7 @@
   <tbody>
     <% @equipamentusers.each do |equipamentuser| %>
       <tr>
-        <td><%= link_to equipamentuser.equipament.nome, sensors_path %></td>
+        <td><%= link_to equipamentuser.equipament.nome, sensors_path(chave: equipamentuser.equipament.chave) %></td>
         <td><%= equipamentuser.user.name %></td>
         <td><%= link_to 'Excluir', equipamentuser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

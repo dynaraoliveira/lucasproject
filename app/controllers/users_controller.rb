@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authorize_user
+  
   def new
     @user = User.new
   end
@@ -23,7 +24,9 @@ class UsersController < ApplicationController
     
     def authorize_user
       unless current_user
-        redirect_to root_path
+        if User.first!=nil
+          redirect_to root_path
+        end
       end
     end
 end

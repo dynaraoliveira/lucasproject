@@ -55,4 +55,5 @@ class Api::V1::SensorsController < ApplicationController
     def api_v1_sensor_params
       params.require(:sensor).permit(:chave,:sensor0,:sensor1,:sensor2,:sensor3,:sensor4,:sensor5,:datainclusao)
     end
+    
 end
