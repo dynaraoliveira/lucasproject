@@ -4,8 +4,87 @@ class SensorsController < ApplicationController
   # GET /sensors
   # GET /sensors.json
   def index
-    #@sensors = Sensor.where(premium: true).order("created_at DESC").all
-    @sensors = Sensor.where(chave: params[:chave]).order("datainclusao").all
+    
+    if params[:auxdata] == nil
+      session[:chave] = params[:chave]
+      @sensors = Sensor.where(chave: params[:chave], datainclusao: [Date.today.beginning_of_day..Date.today.end_of_day]).order("datainclusao").all
+    else  
+      @sensors = Sensor.where(chave: session[:chave], datainclusao: [params[:auxdata].to_date.beginning_of_day..params[:auxdata].to_date.end_of_day]).order("datainclusao").all
+    end 
+    
+    labels = []
+    potencia1 = []
+    potencia2 = []
+    potencia3 = []
+    
+    @sensors.each do |sensor|
+            
+      @cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      @cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      @cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+      
+      @cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
+      @cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+      @cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      
+      @ts0 = @cs0 * @cs3
+      @ts1 = @cs1 * @cs4
+      @ts2 = @cs2 * @cs5
+      
+      @hora =  sensor.datainclusao.hour
+      
+      labels.push({
+        label: @hora
+      })
+      
+      potencia1.push({
+        value: @ts0
+      })
+      
+      potencia2.push({
+        value: @ts1
+      })
+      
+      potencia3.push({
+        value: @ts2
+      })
+      
+    end
+    
+    @chart = Fusioncharts::Chart.new({
+        width: "700",
+        height: "300",
+        type: "msline",
+        renderAt: "chartContainer",
+        dataSource: {
+            chart: {
+            caption: "",
+            subCaption: "",
+            xAxisname: "0",
+            yAxisName: "1000",
+            forceAxisLimits: "1",
+            numVisibleLabels: "12",
+            theme: "fint",
+            exportEnabled: "1",
+            },
+            categories: [{category: [ labels ]}],
+                dataset: [
+                    {
+                        seriesname: "Potência1",
+                        data: [ potencia1 ]
+                    },
+                    {
+                        seriesname: "Potência2",
+                        data: [ potencia2 ]
+                    },
+                    {
+                        seriesname: "Potência3",
+                        data: [ potencia3 ]
+                    }
+              ]
+        }
+    })
+    
   end
 
   # GET /sensors/1
