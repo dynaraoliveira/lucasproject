@@ -1,18 +1,30 @@
-<p id="notice"><%= notice %></p>
-
 <% provide(:title, 'Sensores') %>
 
-<%= form_tag(sensors_path, method: "get") do %>
-<%= text_field_tag :auxdata, params[:auxdata] %>
-<%= submit_tag "Buscar", name: nil%>
-<% end %>
+<p id="notice"><%= notice %></p>
 
-<script>
-  $( "#auxdata" ).datepicker({ dateFormat: 'dd/mm/yy' });
-</script>
-
-<div id="chartContainer">
-  <%= @chart.render() %>
+<div class="divform">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1">
+      
+      <br>
+      
+      <%= form_tag(sensors_path, method: "get", class: 'form-inline') do %>
+        <div class="form-group">
+          <%= text_field_tag :auxdata, params[:auxdata], class: 'form-control', placeholder: 'Selecione uma data' %> 
+          <%= submit_tag "Buscar", name: nil, class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+      
+      <script>
+        $( "#auxdata" ).datepicker({ dateFormat: 'dd/mm/yy' });
+      </script>
+      
+      <br>
+        <div id="chartContainer">
+          <%= @chart.render() %>
+        </div>
+      <br>
+      
+    </div>
+  </div>
 </div>
-
-<br><br><br><br><br><br><br><br><br><br><br>

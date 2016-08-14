@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Equipamento</th>
@@ -14,12 +14,12 @@
       <tr>
         <td><%= link_to equipamentuser.equipament.nome, sensors_path(chave: equipamentuser.equipament.chave) %></td>
         <td><%= equipamentuser.user.name %></td>
-        <td><%= link_to 'Excluir', equipamentuser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if session[:user_type] == 'A' %>
+          <td><%= link_to 'Excluir', equipamentuser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'Incluir associação', new_equipamentuser_path %>

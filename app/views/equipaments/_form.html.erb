@@ -1,19 +1,17 @@
+<br>
 <%= form_for(equipament) do |f| %>
 
   <%= render 'shared/equipaments_error_messages' %>
   
-  <%= f.label "Chave" %>
-  <%= f.text_field :chave, class: 'form-control' %>
+  <%= f.text_field :chave, class: 'form-control', placeholder: 'Chave do equipamento' %>
 
-  <%= f.label "Nome" %>
-  <%= f.text_field :nome, class: 'form-control' %>
+  <%= f.text_field :nome, class: 'form-control', placeholder: 'Descrição' %>
 
-  <%= f.label "Cidade" %>
-  <%= f.text_field :cidade, class: 'form-control' %>
+  <%= f.text_field :cidade, class: 'form-control', placeholder: 'Cidade' %>
 
-  <%= f.label "Estado" %>
-  <%= f.select(:estado, [['São Paulo', 'SP']], {include_blank: true}, {class: 'form-control'}) %>
+  <%= f.select(:estado, [['São Paulo', 'SP']], {prompt: 'Selecione o estado'}, {class: 'form-control'}) %>
   
   <%= f.submit "Criar equipamento", class: "btn btn-primary" %>
   
 <% end %>
+<br>

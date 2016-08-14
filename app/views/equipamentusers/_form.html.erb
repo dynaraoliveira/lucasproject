@@ -1,19 +1,13 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<br>
+  <%= form_for(equipamentuser) do |f| %>
+  
+    <%= render 'shared/equipamentusers_error_messages' %>
     
-    <%= form_for(equipamentuser) do |f| %>
+    <%= f.select :equipament_id, Equipament.all.collect { |p| [ p.nome, p.id ] }, {prompt: 'Selecione o equipamento'}, {class: 'form-control'} %>
     
-      <%= render 'shared/equipamentusers_error_messages' %>
-      
-      <%= f.label "Equipamento" %>
-      <%= f.select :equipament_id, Equipament.all.collect { |p| [ p.nome, p.id ] }, {include_blank: true}, {class: 'form-control'} %>
-      
-      <%= f.label "Usuário" %>
-      <%= f.select :user_id, User.all.collect { |p| [ p.name, p.id ] }, {include_blank: true}, {class: 'form-control'} %>
+    <%= f.select :user_id, User.all.collect { |p| [ p.name, p.id ] }, {prompt: 'Selecione o usuário'}, {class: 'form-control'} %>
+  
+    <%= f.submit "Associar", class: "btn btn-primary" %>
     
-      <%= f.submit "Associar", class: "btn btn-primary" %>
-      
-    <% end %>
-    
-  </div>
-</div>
+  <% end %>
+<br>

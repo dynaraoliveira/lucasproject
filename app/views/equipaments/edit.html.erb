@@ -1,6 +1,25 @@
-<h1>Alterar equipamento</h1>
-
-<%= render 'form', equipament: @equipament %>
-
-<%= link_to 'Show', @equipament %> |
-<%= link_to 'Back', equipaments_path %>
+<div class="divform">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-2">
+      <br>
+      
+      <%= form_for(equipament) do |f| %>
+    
+      <%= render 'shared/equipaments_error_messages' %>
+      
+      <%= f.text_field :chave, class: 'form-control', placeholder: 'Chave do equipamento' %>
+    
+      <%= f.text_field :nome, class: 'form-control', placeholder: 'Descrição' %>
+    
+      <%= f.text_field :cidade, class: 'form-control', placeholder: 'Cidade' %>
+    
+      <%= f.select(:estado, [['São Paulo', 'SP']], {prompt: 'Selecione o estado'}, {class: 'form-control'}) %>
+      
+      <%= f.submit "Criar equipamento", class: "btn btn-primary" %>
+      
+      <% end %>
+      
+      <br>
+    </div>
+  </div>
+</div>

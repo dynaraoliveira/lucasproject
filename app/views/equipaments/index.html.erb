@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Nome</th>
       <th>Cidade</th>
       <th>Estado</th>
-      <th colspan="6"></th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
@@ -16,7 +16,6 @@
         <td><%= equipament.nome %></td>
         <td><%= equipament.cidade %></td>
         <td><%= equipament.estado %></td>
-        <td><%= link_to 'Ver', equipament %></td>
         <td><%= link_to 'Editar', edit_equipament_path(equipament) %></td>
         <td><%= link_to 'Excluir', equipament, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
       </tr>

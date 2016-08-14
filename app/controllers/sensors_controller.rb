@@ -38,15 +38,15 @@ class SensorsController < ApplicationController
       })
       
       potencia1.push({
-        value: @ts0
+        value: @ts0.to_i
       })
       
       potencia2.push({
-        value: @ts1
+        value: @ts1.to_i
       })
       
       potencia3.push({
-        value: @ts2
+        value: @ts2.to_i
       })
       
     end
@@ -58,14 +58,15 @@ class SensorsController < ApplicationController
         renderAt: "chartContainer",
         dataSource: {
             chart: {
-            caption: "",
-            subCaption: "",
-            xAxisname: "0",
-            yAxisName: "1000",
-            forceAxisLimits: "1",
-            numVisibleLabels: "12",
-            theme: "fint",
-            exportEnabled: "1",
+              caption: "",
+              subCaption: "",
+              xAxisname: "Horas",
+              yAxisName: "Potência",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0"
             },
             categories: [{category: [ labels ]}],
                 dataset: [
