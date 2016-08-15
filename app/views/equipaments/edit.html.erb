@@ -1,21 +1,27 @@
+<% provide(:title, 'Editar equipamento') %>
+
 <div class="divform">
   <div class="row">
-    <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-6 col-md-offset-3">
       <br>
       
-      <%= form_for(equipament) do |f| %>
+      <%= form_for(@equipament) do |f| %>
     
       <%= render 'shared/equipaments_error_messages' %>
       
+      <label>Chave </label>
       <%= f.text_field :chave, class: 'form-control', placeholder: 'Chave do equipamento' %>
     
+      <label>Descrição </label>
       <%= f.text_field :nome, class: 'form-control', placeholder: 'Descrição' %>
     
+      <label>Cidade </label>
       <%= f.text_field :cidade, class: 'form-control', placeholder: 'Cidade' %>
-    
+      
+      <label>Estado </label>
       <%= f.select(:estado, [['São Paulo', 'SP']], {prompt: 'Selecione o estado'}, {class: 'form-control'}) %>
       
-      <%= f.submit "Criar equipamento", class: "btn btn-primary" %>
+      <%= f.submit "Alterar equipamento", class: "btn btn-primary" %>
       
       <% end %>
       

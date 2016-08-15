@@ -1,0 +1,29 @@
+<% provide(:title, 'Usuários') %>
+
+<p id="notice"><%= notice %></p>
+
+<table class="table table-striped">
+  
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>E-mail</th>
+      <th>Tipo</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, edit_user_path(user) %></td>
+        <td><%= user.email %></td>
+        <td><%= user.usertype %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
+</table>
+
+<br>
+
+<%= link_to 'Novo usuário', users_new_path %>

@@ -1,6 +1,7 @@
 <div class="backgroundlogin"></div>
 
 <div class="loginwhitebox">
+  
   <% provide(:title, "Login") %>
   
   <div class="row">
@@ -13,8 +14,15 @@
         <%= f.password_field :password, class: 'form-control', placeholder: 'Senha' %>
   
         <%= f.submit "Login", class: "btn btn-primary" %>
+        
+        <% flash.each do |message_type, message| %>
+          <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+        <% end %>
+      
       <% end %>
       
     </div>
   </div>
-</div>  
+</div> 
+
+</body>

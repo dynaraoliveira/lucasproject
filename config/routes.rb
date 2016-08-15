@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   
   resources :equipaments
   resources :equipamentusers
+  resources :users
+  
   root 'sessions#new'
   
   get 'sessions/new'

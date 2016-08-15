@@ -5,7 +5,6 @@ class EquipamentusersController < ApplicationController
   # GET /equipaments
   # GET /equipaments.json
   def index
-    
     if session[:user_type] == 'A'
       @equipamentusers = Equipamentuser.all
     else
@@ -24,10 +23,6 @@ class EquipamentusersController < ApplicationController
     @equipamentuser = Equipamentuser.new
   end
 
-  # GET /equipaments/1/edit
-  def edit
-  end
-
   # POST /equipaments
   # POST /equipaments.json
   def create
@@ -35,25 +30,9 @@ class EquipamentusersController < ApplicationController
     
     respond_to do |format|
       if @equipamentuser.save
-        format.html { redirect_to @equipamentuser, notice: 'Equipament was successfully created.' }
-        format.json { render :show, status: :created, location: @equipamentuser }
+        format.html { redirect_to equipamentusers_url, notice: 'Equipamento associado com sucesso.' }
       else
         format.html { render :new }
-        format.json { render json: @equipamentuser.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /equipaments/1
-  # PATCH/PUT /equipaments/1.json
-  def update
-    respond_to do |format|
-      if @equipamentuser.update(equipamentuser_params)
-        format.html { redirect_to @equipamentuser, notice: 'Equipament was successfully updated.' }
-        format.json { render :show, status: :ok, location: @equipamentuser }
-      else
-        format.html { render :edit }
-        format.json { render json: @equipamentuser.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,8 +42,7 @@ class EquipamentusersController < ApplicationController
   def destroy
     @equipamentuser.destroy
     respond_to do |format|
-      format.html { redirect_to equipamentusers_url, notice: 'Equipament was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to equipamentusers_url, notice: 'Associação deletada com sucesso.' }
     end
   end
 

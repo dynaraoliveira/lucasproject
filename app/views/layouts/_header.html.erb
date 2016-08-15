@@ -11,7 +11,7 @@
             </a>
             <ul class="dropdown-menu">
               <% if session[:user_type] == 'A' %>
-              <li><%= link_to "Novo usuário", users_new_path %></li>
+              <li><%= link_to "Usuários", users_path %></li>
               <li><%= link_to "Equipamentos", equipaments_path %></li>
               <li><%= link_to "Incluir associações", new_equipamentuser_path %></li>
               <li><%= link_to "Lista de equipamentos", equipamentusers_path %></li>

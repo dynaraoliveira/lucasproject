@@ -8,21 +8,11 @@ class EquipamentsController < ApplicationController
     @equipaments = Equipament.all
   end
 
-  # GET /equipaments/1
-  # GET /equipaments/1.json
-  def show
-    @equipament = Equipament.find(params[:id])
-  end
-
   # GET /equipaments/new
   def new
     @equipament = Equipament.new
   end
-
-  # GET /equipaments/1/edit
-  def edit
-  end
-
+  
   # POST /equipaments
   # POST /equipaments.json
   def create
@@ -30,13 +20,15 @@ class EquipamentsController < ApplicationController
     
     respond_to do |format|
       if @equipament.save
-        format.html { redirect_to @equipament, notice: 'Equipament was successfully created.' }
-        format.json { render :show, status: :created, location: @equipament }
+        format.html { redirect_to equipaments_url, notice: 'Equipamento criado com sucesso.' }
       else
         format.html { render :new }
-        format.json { render json: @equipament.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /equipaments/1/edit
+  def edit
   end
 
   # PATCH/PUT /equipaments/1
@@ -44,11 +36,9 @@ class EquipamentsController < ApplicationController
   def update
     respond_to do |format|
       if @equipament.update(equipament_params)
-        format.html { redirect_to @equipament, notice: 'Equipament was successfully updated.' }
-        format.json { render :show, status: :ok, location: @equipament }
+        format.html { redirect_to equipaments_url, notice: 'Equipamento alterado com sucesso.' }
       else
         format.html { render :edit }
-        format.json { render json: @equipament.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,8 +48,7 @@ class EquipamentsController < ApplicationController
   def destroy
     @equipament.destroy
     respond_to do |format|
-      format.html { redirect_to equipaments_url, notice: 'Equipament was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to equipaments_url, notice: 'Equipamento deletado com sucesso.' }
     end
   end
 
@@ -79,4 +68,11 @@ class EquipamentsController < ApplicationController
         redirect_to root_path
       end
     end
+    
+  # GET /equipaments/1
+  # GET /equipaments/1.json
+  #def show
+  #  @equipament = Equipament.find(params[:id])
+  #end
+  
 end
