@@ -2,29 +2,139 @@
 
 <p id="notice"><%= notice %></p>
 
-<div class="divform">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-1">
-      
-      <br>
-      
-      <%= form_tag(sensors_path, method: "get", class: 'form-inline') do %>
-        <div class="form-group">
-          <%= text_field_tag :auxdata, params[:auxdata], class: 'form-control', placeholder: 'Selecione uma data' %> 
-          <%= submit_tag "Buscar", name: nil, class: 'btn btn-primary' %>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#dia">Dia</a></li>
+  <li><a data-toggle="tab" href="#mes">Mês</a></li>
+  <li><a data-toggle="tab" href="#ano">Ano</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="dia" class="tab-pane fade in active">
+    
+    <%# Gráfico visão do dia%>    
+    
+    <div class="divform">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+          
+          <br>
+          
+          <table class="table table-striped">
+            <%= form_tag(sensors_path, method: "get") do %>
+              <tr>
+                <td><%= text_field_tag :auxdata, params[:auxdata], class: 'form-control', placeholder: 'Selecione uma data' %></td> 
+                <td><%= submit_tag "Buscar", name: nil, class: 'btn btn-primary' %></td>
+              </tr>
+            <% end %>
+          </table>
+          
+          <script>
+            $( "#auxdata" ).datepicker({ dateFormat: 'dd/mm/yy' });
+          </script>
+          
+          <br>
+            <div id="chartContainer">
+              <%= @chart.render() %>
+            </div>
+          <br>
+          
         </div>
-      <% end %>
-      
-      <script>
-        $( "#auxdata" ).datepicker({ dateFormat: 'dd/mm/yy' });
-      </script>
-      
-      <br>
-        <div id="chartContainer">
-          <%= @chart.render() %>
-        </div>
-      <br>
-      
+      </div>
     </div>
+    
+    <%# Gráfico visão do dia%>
+    
+  </div>
+  
+  <div id="mes" class="tab-pane fade">
+    
+    <%# Gráfico visão do mês %>
+    
+    <div class="divform">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+          
+          <br>
+          
+          <table class="table table-striped">
+            <tr>
+              <td>
+              <%= select(:auxmes, params[:auxmes], [
+              ['Janeiro', 1], ['Fevereiro', 2], ['Março', 3], ['Abril', 4],
+              ['Maio', 5], ['Junho', 6], ['Julho', 7], ['Agosto', 8],
+              ['Setembro', 9], ['Outubro', 10], ['Novembro', 11], ['Dezembro', 12]
+              ], {prompt: 'Selecione o mês'}, {class: 'form-control'}) %>
+              </td>
+              <td>
+              <%= select(:auxano, params[:auxano], [
+                ['2016', 2016], ['2017', 2017],
+                ['2018', 2018], ['2019', 2019],
+                ['2020', 2020], ['2021', 2021],
+                ['2022', 2022], ['2023', 2023],
+                ['2024', 2024], ['2025', 2025],
+                ['2026', 2026], ['2027', 2027],
+                ['2028', 2028], ['2029', 2029], ['2030', 2030]
+              ], {prompt: 'Selecione o ano'}, {class: 'form-control'}) %>
+              </td>
+              <td><%= submit_tag "Buscar", name: nil, class: 'btn btn-primary' %></td>
+            </tr>
+          </table>
+        
+          <br>
+          
+          <div id="chartmesContainer">
+            <%= @chartmes.render() %>
+          </div>
+          
+          <br>
+          
+        </div>
+      </div>
+    </div>
+    
+    <%# Gráfico visão do mês%>
+    
+  </div>
+  <div id="ano" class="tab-pane fade">
+    
+    <%# Gráfico visão do ano %>
+    
+    <div class="divform">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+          
+          <br>
+          
+          <table class="table table-striped">
+            <tr>
+              <td>
+              <%= select(:auxano, params[:auxano], [
+                ['2016', 2016], ['2017', 2017],
+                ['2018', 2018], ['2019', 2019],
+                ['2020', 2020], ['2021', 2021],
+                ['2022', 2022], ['2023', 2023],
+                ['2024', 2024], ['2025', 2025],
+                ['2026', 2026], ['2027', 2027],
+                ['2028', 2028], ['2029', 2029], ['2030', 2030]
+              ], {prompt: 'Selecione o ano'}, {class: 'form-control'}) %>
+              </td>
+              <td><%= submit_tag "Buscar", name: nil, class: 'btn btn-primary' %></td>
+            </tr>
+          </table>
+        
+          <br>
+          
+          <div id="chartanoContainer">
+            <%= @chartano.render() %>
+          </div>
+          
+          <br>
+          
+        </div>
+      </div>
+    </div>
+    
+    <%# Gráfico visão do ano%>
+    
   </div>
 </div>

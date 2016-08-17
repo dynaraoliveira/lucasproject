@@ -5,7 +5,6 @@ class SensorsController < ApplicationController
   # GET /sensors
   # GET /sensors.json
   def index
-    
     if params[:auxdata] == nil
       session[:chave] = params[:chave]
       @sensors = Sensor.where(chave: params[:chave], datainclusao: [Date.today.beginning_of_day..Date.today.end_of_day]).order("datainclusao").all
@@ -18,36 +17,108 @@ class SensorsController < ApplicationController
     potencia2 = []
     potencia3 = []
     
+    labelsmes = []
+    potencia1mes = []
+    potencia2mes = []
+    potencia3mes = []
+    
+    labelsano = []
+    potencia1ano = []
+    potencia2ano = []
+    potencia3ano = []
+    
     @sensors.each do |sensor|
-            
-      @cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
-      @cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
-      @cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
       
-      @cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
-      @cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-      @cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
       
-      @ts0 = @cs0 * @cs3
-      @ts1 = @cs1 * @cs4
-      @ts2 = @cs2 * @cs5
+      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
+      cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
       
-      @hora =  sensor.datainclusao.hour
+      ts0 = cs0 * cs3
+      ts1 = cs1 * cs4
+      ts2 = cs2 * cs5
       
       labels.push({
-        label: @hora
+        label: sensor.datainclusao.strftime('%T')
       })
       
       potencia1.push({
-        value: @ts0.to_i
+        value: ts0.to_i
       })
       
       potencia2.push({
-        value: @ts1.to_i
+        value: ts1.to_i
       })
       
       potencia3.push({
-        value: @ts2.to_i
+        value: ts2.to_i
+      })
+      
+    end  
+    
+    @sensors.each do |sensor|
+      
+      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+      
+      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
+      cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      
+      ts0 = cs0 * cs3
+      ts1 = cs1 * cs4
+      ts2 = cs2 * cs5
+    
+      labelsmes.push({
+        label: sensor.datainclusao.strftime('%F')
+      })
+      
+      potencia1mes.push({
+        value: ts0.to_i
+      })
+      
+      potencia2mes.push({
+        value: ts1.to_i
+      })
+      
+      potencia3mes.push({
+        value: ts2.to_i
+      })
+    
+    end  
+    
+    @sensors.each do |sensor|
+      
+      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+      
+      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
+      cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      
+      ts0 = cs0 * cs3
+      ts1 = cs1 * cs4
+      ts2 = cs2 * cs5
+      
+      labelsano.push({
+        label: sensor.datainclusao.month
+      })
+      
+      potencia1ano.push({
+        value: ts0.to_i
+      })
+      
+      potencia2ano.push({
+        value: ts1.to_i
+      })
+      
+      potencia3ano.push({
+        value: ts2.to_i
       })
       
     end
@@ -55,7 +126,7 @@ class SensorsController < ApplicationController
     @chart = Fusioncharts::Chart.new({
         width: "700",
         height: "300",
-        type: "msline",
+        type: "zoomline",
         renderAt: "chartContainer",
         dataSource: {
             chart: {
@@ -72,16 +143,87 @@ class SensorsController < ApplicationController
             categories: [{category: [ labels ]}],
                 dataset: [
                     {
-                        seriesname: "Potência1",
+                        seriesname: "Potência 1",
                         data: [ potencia1 ]
                     },
                     {
-                        seriesname: "Potência2",
+                        seriesname: "Potência 2",
                         data: [ potencia2 ]
                     },
                     {
-                        seriesname: "Potência3",
+                        seriesname: "Potência 3",
                         data: [ potencia3 ]
+                    }
+              ]
+        }
+    })
+    
+    @chartmes = Fusioncharts::Chart.new({
+        width: "700",
+        height: "300",
+        type: "mscolumn2d",
+        renderAt: "chartmesContainer",
+        dataSource: {
+            chart: {
+              caption: "",
+              subCaption: "",
+              xAxisname: "Dias",
+              yAxisName: "Potência",
+              forceAxisLimits: "1",
+              numVisibleLabels: "31",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0"
+            },
+            categories: [{category: [ labelsmes ]}],
+                dataset: [
+                    {
+                        seriesname: "Potência 1",
+                        data: [ potencia1mes ]
+                    },
+                    {
+                        seriesname: "Potência 2",
+                        data: [ potencia2mes ]
+                    },
+                    {
+                        seriesname: "Potência 3",
+                        data: [ potencia3mes ]
+                    }
+              ]
+        }
+    })
+    
+    
+    @chartano = Fusioncharts::Chart.new({
+        width: "700",
+        height: "300",
+        type: "mscolumn2d",
+        renderAt: "chartanoContainer",
+        dataSource: {
+            chart: {
+              caption: "",
+              subCaption: "",
+              xAxisname: "Meses",
+              yAxisName: "Potência",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0"
+            },
+            categories: [{category: [ labelsano ]}],
+                dataset: [
+                    {
+                        seriesname: "Potência 1",
+                        data: [ potencia1ano ]
+                    },
+                    {
+                        seriesname: "Potência 2",
+                        data: [ potencia2ano ]
+                    },
+                    {
+                        seriesname: "Potência 3",
+                        data: [ potencia3ano ]
                     }
               ]
         }
