@@ -14,7 +14,7 @@
   <tbody>
     <% @equipamentusers.each do |equipamentuser| %>
       <tr>
-        <td><%= link_to equipamentuser.equipament.nome, sensors_path(chave: equipamentuser.equipament.chave) %></td>
+        <td><%= link_to equipamentuser.equipament.nome, sensors_path(chave: equipamentuser.equipament.chave, ativa: 'D', auxdata: Date.today) %></td>
         <td><%= equipamentuser.user.name %></td>
         <% if session[:user_type] == 'A' %>
           <td><%= link_to 'Excluir', equipamentuser, method: :delete, data: { confirm: 'Are you sure?' } %></td>

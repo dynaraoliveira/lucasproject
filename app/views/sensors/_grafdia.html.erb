@@ -1,0 +1,35 @@
+
+<div class="divform">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1">
+    
+    <br>
+    
+    <table class="table table-striped">
+    <tr>
+    <td><%= text_field(:auxdata, :auxdata, class: "form-control", placeholder: "Selecione uma data", value: params[:auxdata].to_date.strftime("%d/%m/%Y")) %></td>
+    <td><%= link_to "Atualizar", '', id: 'atualizar' %></td>
+    </tr>
+    </table>
+    
+    <script>
+      $("#auxdata_auxdata").datepicker({ dateFormat: 'dd/mm/yy' });
+    </script>
+    
+    <script>
+      $("#atualizar").click( function() {
+        var auxdata = $("#auxdata_auxdata").val();
+        var chave = $("#chave_chave").val();
+        document.location.href="/sensors?ativa=D&auxdata="+auxdata+"&chave="+chave;
+      });
+    </script>
+    
+    <br>
+    <div id="chartContainer">
+    <%= @chart.render() %>
+    </div>
+    <br><br><br><br>
+    
+    </div>
+  </div>
+</div>

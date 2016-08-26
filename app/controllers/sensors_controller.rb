@@ -5,12 +5,31 @@ class SensorsController < ApplicationController
   # GET /sensors
   # GET /sensors.json
   def index
-    if params[:auxdata] == nil
-      session[:chave] = params[:chave]
-      @sensors = Sensor.where(chave: params[:chave], datainclusao: [Date.today.beginning_of_day..Date.today.end_of_day]).order("datainclusao").all
-    else  
-      @sensors = Sensor.where(chave: session[:chave], datainclusao: [params[:auxdata].to_date.beginning_of_day..params[:auxdata].to_date.end_of_day]).order("datainclusao").all
-    end 
+    
+    chart_params
+    
+    session[:ativa] = params[:ativa]
+    session[:chave] = params[:chave]
+    session[:auxdata] = params[:auxdata]
+    
+    if params[:ativa] == 'D'
+      
+      @pardatini = params[:auxdata].to_date.beginning_of_day
+      @pardatfim = params[:auxdata].to_date.end_of_day
+      
+    elsif params[:ativa] == 'M'
+      
+      @pardatini = params[:auxdata].to_date
+      @pardatfim = params[:auxdata].to_date.end_of_month
+      
+    elsif params[:ativa] == 'A'
+      
+      @pardatini = params[:auxdata].to_date
+      @pardatfim = params[:auxdata].to_date.end_of_year
+      
+    end
+    
+    @sensors = Sensor.where(chave: params[:chave], datainclusao: @pardatini..@pardatfim).order("datainclusao").all
     
     labels = []
     potencia1 = []
@@ -243,8 +262,12 @@ class SensorsController < ApplicationController
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
-    def sensor_params
-      params.require(:sensor).permit(:chave,:s0,:s1,:s2,:s3,:s4,:s5,:data)
+    #def sensor_params
+    #  params.require(:sensor).permit(:chave,:s0,:s1,:s2,:s3,:s4,:s5,:data)
+    #end
+    
+    def chart_params
+      params.permit(:ativa, :auxdata, :chave)
     end
     
     def authorize_user

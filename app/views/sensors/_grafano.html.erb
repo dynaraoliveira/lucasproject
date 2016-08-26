@@ -1,0 +1,42 @@
+<div class="divform">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1">
+      
+      <br>
+      
+      <table class="table table-striped">
+        <tr>
+          <td>
+          <%= select(:auxano2, :auxano2, [
+            ['2016', 2016], ['2017', 2017],
+            ['2018', 2018], ['2019', 2019],
+            ['2020', 2020], ['2021', 2021],
+            ['2022', 2022], ['2023', 2023],
+            ['2024', 2024], ['2025', 2025],
+            ['2026', 2026], ['2027', 2027],
+            ['2028', 2028], ['2029', 2029], ['2030', 2030]
+          ], {prompt: 'Selecione o ano', selected: params[:auxdata].to_date.strftime("%Y").to_i}, {class: 'form-control'}) %>
+          </td>
+          <td><%= link_to "Atualizar", '', id: 'atualizarano' %></td>
+        </tr>
+      </table>
+    
+      <br>
+      
+      <div id="chartanoContainer">
+        <%= @chartano.render() %>
+      </div>
+      
+      <br>
+      
+      <script>
+        $("#atualizarano").click( function() {
+          var auxano = $("#auxano2_auxano2").val().toString();
+          var chave = $("#chave_chave").val();
+          
+          document.location.href="/sensors?ativa=A&auxdata=01/01/"+auxano+"&chave="+chave;
+        });
+      </script>
+    </div>
+  </div>
+</div>
