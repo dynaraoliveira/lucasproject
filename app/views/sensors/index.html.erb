@@ -6,7 +6,7 @@
 
 <ul class="nav nav-tabs">
   
-  <% if session[:ativa] == 'D' %>
+  <% if params[:ativa] == 'D' %>
   <li class="active">
   <% elsif %>
   <li>
@@ -14,7 +14,7 @@
   
   <a data-toggle="tab" href="#dia">Dia</a></li>
   
-  <% if session[:ativa] == 'M' %>
+  <% if params[:ativa] == 'M' %>
   <li class="active">
   <% elsif %>
   <li>
@@ -22,18 +22,19 @@
   
   <a data-toggle="tab" href="#mes">Mês</a></li>
   
-  <% if session[:ativa] == 'A' %>
+  <% if params[:ativa] == 'A' %>
   <li class="active">
   <% elsif %>
   <li>
   <% end %> 
   
   <li><a data-toggle="tab" href="#ano">Ano</a></li>
+  
 </ul>
 
 <div class="tab-content">
   
-  <% if session[:ativa] == 'D' %>
+  <% if params[:ativa] == 'D' %>
   <div id="dia" class="tab-pane fade in active">
   <% elsif %>
   <div id="dia" class="tab-pane fade">
@@ -44,7 +45,7 @@
     <%# Gráfico visão do dia %>
   </div>
   
-  <% if session[:ativa] == 'M' %>
+  <% if params[:ativa] == 'M' %>
   <div id="mes" class="tab-pane fade in active">
   <% elsif %>
   <div id="mes" class="tab-pane fade">
@@ -57,7 +58,7 @@
     
   </div>
   
-  <% if session[:ativa] == 'A' %>
+  <% if params[:ativa] == 'A' %>
   <div id="ano" class="tab-pane fade in active">
   <% elsif %>
   <div id="ano" class="tab-pane fade">

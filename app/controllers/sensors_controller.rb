@@ -8,28 +8,20 @@ class SensorsController < ApplicationController
     
     chart_params
     
-    session[:ativa] = params[:ativa]
-    session[:chave] = params[:chave]
-    session[:auxdata] = params[:auxdata]
+    @diaini = params[:auxdata].to_date.beginning_of_day
+    @diafim = params[:auxdata].to_date.end_of_day
     
-    if params[:ativa] == 'D'
-      
-      @pardatini = params[:auxdata].to_date.beginning_of_day
-      @pardatfim = params[:auxdata].to_date.end_of_day
-      
-    elsif params[:ativa] == 'M'
-      
-      @pardatini = params[:auxdata].to_date
-      @pardatfim = params[:auxdata].to_date.end_of_month
-      
-    elsif params[:ativa] == 'A'
-      
-      @pardatini = params[:auxdata].to_date
-      @pardatfim = params[:auxdata].to_date.end_of_year
-      
-    end
+    @mesini = params[:auxdata].to_date.beginning_of_month
+    @mesfim = params[:auxdata].to_date.end_of_month
     
-    @sensors = Sensor.where(chave: params[:chave], datainclusao: @pardatini..@pardatfim).order("datainclusao").all
+    @anoini = params[:auxdata].to_date.beginning_of_year
+    @anofim = params[:auxdata].to_date.end_of_year
+  
+    @sensors = Sensor.where(chave: params[:chave]).order("datainclusao").all
+    
+    @sensors_dia = @sensors.where(datainclusao: @diaini..@diafim)
+    @sensors_mes = @sensors.where(datainclusao: @mesini..@mesfim)
+    @sensors_ano = @sensors.where(datainclusao: @anoini..@anofim)
     
     labels = []
     potencia1 = []
@@ -37,16 +29,12 @@ class SensorsController < ApplicationController
     potencia3 = []
     
     labelsmes = []
-    potencia1mes = []
     potencia2mes = []
-    potencia3mes = []
     
     labelsano = []
-    potencia1ano = []
     potencia2ano = []
-    potencia3ano = []
     
-    @sensors.each do |sensor|
+    @sensors_dia.each do |sensor|
       
       cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
       cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
@@ -76,70 +64,92 @@ class SensorsController < ApplicationController
         value: ts2.to_i
       })
       
-    end  
+    end
     
-    @sensors.each do |sensor|
+    @ts1 = 0
+    
+    @sensors_mes.each do |sensor|
       
-      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      @auxdia = sensor.datainclusao.day
+      
+      if @auxdia2 == nil
+        @auxdia2 = sensor.datainclusao.day
+      end
+      
+      if @auxdia != @auxdia2
+      
+        labelsmes.push({
+          label: @label
+        })
+        
+        potencia2mes.push({
+          value: @ts1.to_i
+        })
+        
+        @ts1 = 0
+        
+      end
+      
       cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
-      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
-      
-      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
       cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
       
-      ts0 = cs0 * cs3
-      ts1 = cs1 * cs4
-      ts2 = cs2 * cs5
+      @label = sensor.datainclusao.strftime('%F')
+      @ts1 += (cs1 * cs4)
+      @auxdia2 = sensor.datainclusao.day
+      
+    end
     
+    if @auxdia == @auxdia2
       labelsmes.push({
-        label: sensor.datainclusao.strftime('%F')
-      })
-      
-      potencia1mes.push({
-        value: ts0.to_i
+        label: @label
       })
       
       potencia2mes.push({
-        value: ts1.to_i
+        value: @ts1.to_i
       })
-      
-      potencia3mes.push({
-        value: ts2.to_i
-      })
+    end
     
-    end  
+    @ts1 = 0
     
-    @sensors.each do |sensor|
+    @sensors_ano.each do |sensor|
       
-      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
+      @auxmes = sensor.datainclusao.month
+      
+      if @auxmes2 == nil
+        @auxmes2 = sensor.datainclusao.month
+      end
+      
+      if @auxdia != @auxdia2
+      
+        labelsano.push({
+          label: @label
+        })
+        
+        potencia2ano.push({
+          value: @ts1.to_i
+        })
+        
+        @ts1 = 0
+        
+      end
+          
       cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
-      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
-      
-      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
       cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+    
+      @label = sensor.datainclusao.month
+      @ts1 += (cs1 * cs4)
+      @auxmes2 = sensor.datainclusao.month
       
-      ts0 = cs0 * cs3
-      ts1 = cs1 * cs4
-      ts2 = cs2 * cs5
-      
+    end
+    
+    if @auxmes == @auxmes2
       labelsano.push({
-        label: sensor.datainclusao.month
-      })
-      
-      potencia1ano.push({
-        value: ts0.to_i
+        label: @label
       })
       
       potencia2ano.push({
-        value: ts1.to_i
+        value: @ts1.to_i
       })
-      
-      potencia3ano.push({
-        value: ts2.to_i
-      })
-      
     end
     
     @chart = Fusioncharts::Chart.new({
@@ -192,21 +202,14 @@ class SensorsController < ApplicationController
               numVisibleLabels: "31",
               theme: "fint",
               exportEnabled: "1",
-              showValues: "0"
+              showValues: "0",
+              numberSuffix: "W/h"
             },
             categories: [{category: [ labelsmes ]}],
                 dataset: [
                     {
-                        seriesname: "Potência 1",
-                        data: [ potencia1mes ]
-                    },
-                    {
                         seriesname: "Potência 2",
                         data: [ potencia2mes ]
-                    },
-                    {
-                        seriesname: "Potência 3",
-                        data: [ potencia3mes ]
                     }
               ]
         }
@@ -228,21 +231,14 @@ class SensorsController < ApplicationController
               numVisibleLabels: "12",
               theme: "fint",
               exportEnabled: "1",
-              showValues: "0"
+              showValues: "0",
+              numberSuffix: "W/h"
             },
             categories: [{category: [ labelsano ]}],
                 dataset: [
                     {
-                        seriesname: "Potência 1",
-                        data: [ potencia1ano ]
-                    },
-                    {
                         seriesname: "Potência 2",
                         data: [ potencia2ano ]
-                    },
-                    {
-                        seriesname: "Potência 3",
-                        data: [ potencia3ano ]
                     }
               ]
         }
