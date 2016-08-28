@@ -83,7 +83,7 @@ class SensorsController < ApplicationController
         })
         
         potencia2mes.push({
-          value: @ts1.to_i
+          value: (@ts1 / 24).to_i
         })
         
         @ts1 = 0
@@ -94,6 +94,7 @@ class SensorsController < ApplicationController
       cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
       
       @label = sensor.datainclusao.strftime('%F')
+      
       @ts1 += (cs1 * cs4)
       @auxdia2 = sensor.datainclusao.day
       
@@ -105,7 +106,7 @@ class SensorsController < ApplicationController
       })
       
       potencia2mes.push({
-        value: @ts1.to_i
+        value: (@ts1 / 24).to_i
       })
     end
     
@@ -119,14 +120,14 @@ class SensorsController < ApplicationController
         @auxmes2 = sensor.datainclusao.month
       end
       
-      if @auxdia != @auxdia2
+      if @auxmes != @auxmes2
       
         labelsano.push({
           label: @label
         })
         
         potencia2ano.push({
-          value: @ts1.to_i
+          value: ((@ts1 / 30) / 24).to_i
         })
         
         @ts1 = 0
@@ -148,7 +149,7 @@ class SensorsController < ApplicationController
       })
       
       potencia2ano.push({
-        value: @ts1.to_i
+        value: ((@ts1 / 30) / 24).to_i
       })
     end
     
@@ -162,7 +163,7 @@ class SensorsController < ApplicationController
               caption: "",
               subCaption: "",
               xAxisname: "Horas",
-              yAxisName: "Potência",
+              yAxisName: "Potência (kW)",
               forceAxisLimits: "1",
               numVisibleLabels: "12",
               theme: "fint",
@@ -197,7 +198,7 @@ class SensorsController < ApplicationController
               caption: "",
               subCaption: "",
               xAxisname: "Dias",
-              yAxisName: "Potência",
+              yAxisName: "Energia (kW/h)",
               forceAxisLimits: "1",
               numVisibleLabels: "31",
               theme: "fint",
@@ -226,7 +227,7 @@ class SensorsController < ApplicationController
               caption: "",
               subCaption: "",
               xAxisname: "Meses",
-              yAxisName: "Potência",
+              yAxisName: "Energia (kW/h)",
               forceAxisLimits: "1",
               numVisibleLabels: "12",
               theme: "fint",
