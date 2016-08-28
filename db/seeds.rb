@@ -13,7 +13,7 @@
 
 Sensor.delete_all
 
-100.times do |i|
+5000.times do |i|
   @datainclusao = i.hours.ago
   Sensor.create!(chave: "ABC1", sensor0: rand(255), sensor1: rand(255), sensor2: rand(255), sensor3: rand(255), sensor4: rand(255), sensor5: rand(255), datainclusao: @datainclusao)
 end

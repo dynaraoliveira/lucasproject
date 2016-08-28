@@ -1,19 +1,24 @@
-
 <div class="divform">
   <div class="row">
     <div class="col-md-3 col-md-offset-1">
     
     <br>
-    
+
     <table class="table table-striped">
-    <tr>
-    <td><%= text_field(:auxdata, :auxdata, class: "form-control", placeholder: "Selecione uma data", value: params[:auxdata].to_date.strftime("%d/%m/%Y")) %></td>
-    <td><%= link_to "Atualizar", '', id: 'atualizar' %></td>
-    </tr>
+      <tr>
+        <td><%= text_field(:auxdata, :auxdata, value: params[:auxdata].to_date.strftime("%d/%m/%Y")) %></td>
+        <td><%= link_to "Atualizar", '', id: 'atualizar' %></td>
+      </tr>
     </table>
     
     <script>
-      $("#auxdata_auxdata").datepicker({ dateFormat: 'dd/mm/yy' });
+      $("#auxdata_auxdata").datepicker({ 
+        dateFormat: 'dd/mm/yy',
+        showOn: "button",
+        buttonImage: "assets/calendario.png",
+        buttonImageOnly: true,
+        buttonText: "Select date"
+      });
     </script>
     
     <script>
