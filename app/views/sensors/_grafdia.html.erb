@@ -8,13 +8,12 @@
     <table class="table table-striped">
     <tr>
     <td><%= text_field(:auxdata, :auxdata, class: "form-control", placeholder: "Selecione uma data", value: params[:auxdata].to_date.strftime("%d/%m/%Y")) %></td>
-    <td><%= link_to "", '', id: 'calendar', class: 'glyphicon glyphicon-calendar' %></td>
     <td><%= link_to "Atualizar", '', id: 'atualizar' %></td>
     </tr>
     </table>
     
     <script>
-      $("#calendar").datepicker({ dateFormat: 'dd/mm/yy' });
+      $("#auxdata_auxdata").datepicker({ dateFormat: 'dd/mm/yy' });
     </script>
     
     <script>
