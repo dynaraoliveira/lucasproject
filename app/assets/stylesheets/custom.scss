@@ -144,6 +144,7 @@ aside {
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
+  width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
 }
@@ -183,4 +184,20 @@ input {
   border-radius: 20px;
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
+}
+
+#auxdata_auxdata {
+  width: 80%;
+}
+
+#auxmes_auxmes {
+  width: 100%;
+}
+
+#auxano_auxano {
+  width: 100%;
+}
+
+#auxano2_auxano2 {
+  width: 90%;
 }
