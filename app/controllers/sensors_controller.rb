@@ -23,16 +23,26 @@ class SensorsController < ApplicationController
     @sensors_mes = @sensors.where(datainclusao: @mesini..@mesfim)
     @sensors_ano = @sensors.where(datainclusao: @anoini..@anofim)
     
-    labels = []
-    potencia1 = []
-    potencia2 = []
-    potencia3 = []
+    labelsdia = []
+    limpezadia = []
+    prodgerdia = []
+    utilresdia = []
+    economidia = []
     
     labelsmes = []
-    potencia2mes = []
+    limpezames = []
+    prodgermes = []
+    utilresmes = []
+    economimes = []
     
     labelsano = []
-    potencia2ano = []
+    limpezaano = []
+    prodgerano = []
+    utilresano = []
+    economiano = []
+    
+    
+    @valor_dia = 0
     
     @sensors_dia.each do |sensor|
       
@@ -47,26 +57,38 @@ class SensorsController < ApplicationController
       ts0 = cs0 * cs3
       ts1 = cs1 * cs4
       ts2 = cs2 * cs5
+      ts3 = ts2 - ts1
       
-      labels.push({
+      @valor_dia += ts1.to_i
+      
+      labelsdia.push({
         label: sensor.datainclusao.strftime('%T')
       })
       
-      potencia1.push({
+      limpezadia.push({
         value: ts0.to_i
       })
       
-      potencia2.push({
+      prodgerdia.push({
         value: ts1.to_i
       })
       
-      potencia3.push({
+      utilresdia.push({
+        value: ts3.to_i
+      })
+      
+      economidia.push({
         value: ts2.to_i
       })
       
     end
     
+    @ts0 = 0
     @ts1 = 0
+    @ts2 = 0
+    @ts3 = 0
+    
+    @valor_mes = 0
     
     @sensors_mes.each do |sensor|
       
@@ -77,40 +99,87 @@ class SensorsController < ApplicationController
       end
       
       if @auxdia != @auxdia2
-      
+        
+        @valor_mes += @ts2
+        
         labelsmes.push({
           label: @label
         })
         
-        potencia2mes.push({
-          value: (@ts1 / 24).to_i
+        limpezames.push({
+          value: @ts0.to_i
         })
         
+        prodgermes.push({
+          value: @ts1.to_i
+        })
+        
+        utilresmes.push({
+          value: @ts3.to_i
+        })
+        
+        economimes.push({
+          value: @ts2.to_i
+        })
+        
+        @ts0 = 0
         @ts1 = 0
+        @ts2 = 0
+        @ts3 = 0
         
       end
       
+      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
       cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+      
+      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
       cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
+      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      
+      @ts0 += cs0 * cs3
+      @ts1 += cs1 * cs4
+      @ts2 += cs2 * cs5
+      @ts3 += @ts2 - @ts1
       
       @label = sensor.datainclusao.strftime('%F')
       
-      @ts1 += (cs1 * cs4)
       @auxdia2 = sensor.datainclusao.day
       
     end
     
     if @auxdia == @auxdia2
+      
+      @valor_mes += @ts2
+      
       labelsmes.push({
         label: @label
       })
       
-      potencia2mes.push({
-        value: (@ts1 / 24).to_i
+      limpezames.push({
+        value: @ts0.to_i
       })
+      
+      prodgermes.push({
+        value: @ts1.to_i
+      })
+      
+      utilresmes.push({
+        value: @ts3.to_i
+      })
+      
+      economimes.push({
+        value: @ts2.to_i
+      })
+      
     end
     
+    @ts0 = 0
     @ts1 = 0
+    @ts2 = 0
+    @ts3 = 0
+    
+    @valor_ano = 0
     
     @sensors_ano.each do |sensor|
       
@@ -121,84 +190,201 @@ class SensorsController < ApplicationController
       end
       
       if @auxmes != @auxmes2
-      
+        
+        @valor_ano += @ts2
+        
         labelsano.push({
           label: @label
         })
         
-        potencia2ano.push({
-          value: ((@ts1 / 30) / 24).to_i
+        limpezaano.push({
+          value: @ts0.to_i
         })
         
+        prodgerano.push({
+          value: @ts1.to_i
+        })
+        
+        utilresano.push({
+          value: @ts3.to_i
+        })
+        
+        economiano.push({
+          value: @ts2.to_i
+        })
+        
+        @ts0 = 0
         @ts1 = 0
+        @ts2 = 0
+        @ts3 = 0
         
       end
           
+      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
       cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
+      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
+      
+      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
       cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-    
+      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
+      
+      @ts0 += cs0 * cs3
+      @ts1 += cs1 * cs4
+      @ts2 += cs2 * cs5
+      @ts3 += @ts2 - @ts1
+      
       @label = sensor.datainclusao.month
-      @ts1 += (cs1 * cs4)
+      
       @auxmes2 = sensor.datainclusao.month
       
     end
     
     if @auxmes == @auxmes2
+      
+      @valor_ano += @ts2
+      
       labelsano.push({
         label: @label
       })
       
-      potencia2ano.push({
-        value: ((@ts1 / 30) / 24).to_i
+      limpezaano.push({
+        value: @ts0.to_i
       })
+      
+      prodgerano.push({
+        value: @ts1.to_i
+      })
+      
+      utilresano.push({
+        value: @ts3.to_i
+      })
+      
+      economiano.push({
+        value: @ts2.to_i
+      })
+      
     end
     
+    
     @chart = Fusioncharts::Chart.new({
-        width: "700",
-        height: "300",
+        width: "450",
+        height: "250",
         type: "zoomline",
         renderAt: "chartContainer",
         dataSource: {
             chart: {
-              caption: "",
+              caption: "Controle de manutenção",
               subCaption: "",
               xAxisname: "Horas",
-              yAxisName: "Potência (kW)",
+              yAxisName: "Produção (kW)",
               forceAxisLimits: "1",
               numVisibleLabels: "12",
               theme: "fint",
               exportEnabled: "1",
               showValues: "0"
             },
-            categories: [{category: [ labels ]}],
+            categories: [{category: [ labelsdia ]}],
                 dataset: [
                     {
-                        seriesname: "Potência 1",
-                        data: [ potencia1 ]
-                    },
+                        seriesname: "Produção",
+                        data: [ limpezadia ]
+                    }
+              ]
+        }
+    })
+    
+    @chart2 = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "zoomline",
+        renderAt: "chart2Container",
+        dataSource: {
+            chart: {
+              caption: "Produção Geral",
+              subCaption: "",
+              xAxisname: "Horas",
+              yAxisName: "Produção (kW)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0"
+            },
+            categories: [{category: [ labelsdia ]}],
+                dataset: [
                     {
-                        seriesname: "Potência 2",
-                        data: [ potencia2 ]
-                    },
+                        seriesname: "Produção",
+                        data: [ prodgerdia ]
+                    }
+              ]
+        }
+    })
+    
+    @chart3 = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "zoomline",
+        renderAt: "chart3Container",
+        dataSource: {
+            chart: {
+              caption: "Controle de Consumo",
+              subCaption: "",
+              xAxisname: "Horas",
+              yAxisName: "Consumo (kW)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0"
+            },
+            categories: [{category: [ labelsdia ]}],
+                dataset: [
                     {
-                        seriesname: "Potência 3",
-                        data: [ potencia3 ]
+                        seriesname: "Consumo",
+                        data: [ utilresdia ]
+                    }
+              ]
+        }
+    })
+    
+    @chart4 = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "zoomline",
+        renderAt: "chart4Container",
+        dataSource: {
+            chart: {
+              caption: "Controle de Econômia",
+              subCaption: "",
+              xAxisname: "Horas",
+              yAxisName: "Econômia (kW)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0"
+            },
+            categories: [{category: [ labelsdia ]}],
+                dataset: [
+                    {
+                        seriesname: "Econômia",
+                        data: [ economidia ]
                     }
               ]
         }
     })
     
     @chartmes = Fusioncharts::Chart.new({
-        width: "700",
-        height: "300",
+        width: "450",
+        height: "250",
         type: "mscolumn2d",
         renderAt: "chartmesContainer",
         dataSource: {
             chart: {
-              caption: "",
+              caption: "Controle de manutenção",
               subCaption: "",
               xAxisname: "Dias",
-              yAxisName: "Energia (kW/h)",
+              yAxisName: "Produção (kW/h)",
               forceAxisLimits: "1",
               numVisibleLabels: "31",
               theme: "fint",
@@ -209,25 +395,108 @@ class SensorsController < ApplicationController
             categories: [{category: [ labelsmes ]}],
                 dataset: [
                     {
-                        seriesname: "Potência 2",
-                        data: [ potencia2mes ]
+                        seriesname: "Produção",
+                        data: [ limpezames ]
                     }
               ]
         }
     })
     
+    @chart2mes = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "mscolumn2d",
+        renderAt: "chart2mesContainer",
+        dataSource: {
+            chart: {
+              caption: "Produção Geral",
+              subCaption: "",
+              xAxisname: "Dias",
+              yAxisName: "Produção (kW/h)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "31",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0",
+              numberSuffix: "W/h"
+            },
+            categories: [{category: [ labelsmes ]}],
+                dataset: [
+                    {
+                        seriesname: "Produção",
+                        data: [ prodgermes ]
+                    }
+              ]
+        }
+    })
+    
+    @chart3mes = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "mscolumn2d",
+        renderAt: "chart3mesContainer",
+        dataSource: {
+            chart: {
+              caption: "Controle de Consumo",
+              subCaption: "",
+              xAxisname: "Dias",
+              yAxisName: "Consumo (kW/h)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "31",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0",
+              numberSuffix: "W/h"
+            },
+            categories: [{category: [ labelsmes ]}],
+                dataset: [
+                    {
+                        seriesname: "Consumo",
+                        data: [ prodgermes ]
+                    }
+              ]
+        }
+    })
+    
+    @chart4mes = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "mscolumn2d",
+        renderAt: "chart4mesContainer",
+        dataSource: {
+            chart: {
+              caption: "Controle de Econômia",
+              subCaption: "",
+              xAxisname: "Dias",
+              yAxisName: "Econômia (kW/h)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "31",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0",
+              numberSuffix: "W/h"
+            },
+            categories: [{category: [ labelsmes ]}],
+                dataset: [
+                    {
+                        seriesname: "Econômia",
+                        data: [ prodgermes ]
+                    }
+              ]
+        }
+    })
     
     @chartano = Fusioncharts::Chart.new({
-        width: "700",
-        height: "300",
+        width: "450",
+        height: "250",
         type: "mscolumn2d",
         renderAt: "chartanoContainer",
         dataSource: {
             chart: {
-              caption: "",
+              caption: "Controle de manutenção",
               subCaption: "",
               xAxisname: "Meses",
-              yAxisName: "Energia (kW/h)",
+              yAxisName: "Produção (kW/h)",
               forceAxisLimits: "1",
               numVisibleLabels: "12",
               theme: "fint",
@@ -238,8 +507,95 @@ class SensorsController < ApplicationController
             categories: [{category: [ labelsano ]}],
                 dataset: [
                     {
-                        seriesname: "Potência 2",
-                        data: [ potencia2ano ]
+                        seriesname: "Produção",
+                        data: [ limpezaano ]
+                    }
+              ]
+        }
+    })
+    
+    
+    @chart2ano = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "mscolumn2d",
+        renderAt: "chart2anoContainer",
+        dataSource: {
+            chart: {
+              caption: "Produção Geral",
+              subCaption: "",
+              xAxisname: "Meses",
+              yAxisName: "Produção (kW/h)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0",
+              numberSuffix: "W/h"
+            },
+            categories: [{category: [ labelsano ]}],
+                dataset: [
+                    {
+                        seriesname: "Produção",
+                        data: [ prodgerano ]
+                    }
+              ]
+        }
+    })
+    
+    
+    @chart3ano = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "mscolumn2d",
+        renderAt: "chart3anoContainer",
+        dataSource: {
+            chart: {
+              caption: "Controle de Consumo",
+              subCaption: "",
+              xAxisname: "Meses",
+              yAxisName: "Consumo (kW/h)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0",
+              numberSuffix: "W/h"
+            },
+            categories: [{category: [ labelsano ]}],
+                dataset: [
+                    {
+                        seriesname: "Consumo",
+                        data: [ utilresano ]
+                    }
+              ]
+        }
+    })
+    
+    
+    @chart4ano = Fusioncharts::Chart.new({
+        width: "450",
+        height: "250",
+        type: "mscolumn2d",
+        renderAt: "chart4anoContainer",
+        dataSource: {
+            chart: {
+              caption: "Controle de Econômia",
+              subCaption: "",
+              xAxisname: "Meses",
+              yAxisName: "Econômia (kW/h)",
+              forceAxisLimits: "1",
+              numVisibleLabels: "12",
+              theme: "fint",
+              exportEnabled: "1",
+              showValues: "0",
+              numberSuffix: "W/h"
+            },
+            categories: [{category: [ labelsano ]}],
+                dataset: [
+                    {
+                        seriesname: "Econômia",
+                        data: [ economiano ]
                     }
               ]
         }

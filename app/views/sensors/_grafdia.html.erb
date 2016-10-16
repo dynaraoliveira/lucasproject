@@ -1,6 +1,6 @@
 <div class="divform">
   <div class="row">
-    <div class="col-md-2 col-md-offset-2">
+    <div class="col-md-2 col-md-offset-1">
     
     <br>
     
@@ -33,9 +33,36 @@
     </script>
     
     <br>
-    <div id="chartContainer">
-    <%= @chart.render() %>
-    </div>
+    
+    <%= ((@valor_dia / 24) * 0.18).round(2) %>
+    
+    <table>
+      <tr>
+        <td>
+          <div id="chartContainer">
+            <%= @chart.render() %>
+          </div>
+        </td>
+        <td>
+          <div id="chart2Container">
+            <%= @chart2.render() %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="chart3Container">
+            <%= @chart3.render() %>
+          </div>
+        </td>
+        <td>
+          <div id="chart4Container">
+            <%= @chart4.render() %>
+          </div>
+        </td>
+      </tr>
+    </table>
+    
     <br><br><br><br>
     
     </div>

@@ -1,7 +1,7 @@
 
 <div class="divform">
   <div class="row">
-    <div class="col-md-3 col-md-offset-2">
+    <div class="col-md-3 col-md-offset-1">
       
       <br>
       
@@ -28,9 +28,34 @@
         </tr>
       </table>
       
-      <div id="chartmesContainer">
-        <%= @chartmes.render() %>
-      </div>
+      <%= (((@valor_mes / 30) / 24) * 0.18).round(2) %>
+      
+      <table>
+        <tr>
+          <td>
+            <div id="chartmesContainer">
+              <%= @chartmes.render() %>
+            </div>
+          </td>
+          <td>
+            <div id="chart2mesContainer">
+              <%= @chart2mes.render() %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="chart3mesContainer">
+              <%= @chart3mes.render() %>
+            </div>
+          </td>
+          <td>
+            <div id="chart4mesContainer">
+              <%= @chart4mes.render() %>
+            </div>
+          </td>
+        </tr>
+      </table>
       
       <br>
       

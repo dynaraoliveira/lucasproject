@@ -1,6 +1,6 @@
 <div class="divform">
   <div class="row">
-    <div class="col-md-2 col-md-offset-2">
+    <div class="col-md-2 col-md-offset-1">
       
       <br>
       
@@ -20,10 +20,34 @@
         </tr>
       </table>
       
-      <div id="chartanoContainer">
-        <%= @chartano.render() %>
-      </div>
+      <%= ((((@valor_ano / 12) / 30) / 24) * 0.18).round(2) %>
       
+      <table>
+        <tr>
+          <td>
+            <div id="chartanoContainer">
+              <%= @chartano.render() %>
+            </div>
+          </td>
+          <td>
+            <div id="chart2anoContainer">
+              <%= @chart2ano.render() %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="chart3anoContainer">
+              <%= @chart3ano.render() %>
+            </div>
+          </td>
+          <td>
+            <div id="chart4anoContainer">
+              <%= @chart4ano.render() %>
+            </div>
+          </td>
+        </tr>
+      </table>      
       <br>
       
       <script>
