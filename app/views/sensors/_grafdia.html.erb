@@ -1,15 +1,18 @@
 <div class="divform">
   <div class="row">
-    <div class="col-md-2 col-md-offset-1">
+    <div class="col-md-3 col-md-offset-1">
     
     <br>
     
-    <table class="table table-striped tbteste">
+    <table class="table table-striped">
       <tr>
         <td>
           <div class="input-group date">
             <%= text_field(:auxdata, :auxdata, class: 'form-control', value: params[:auxdata].to_date.strftime("%d/%m/%Y")) %>
           </div>
+        </td>
+        <td>
+          <%= ((@valor_dia / 24) * 0.18).round(2) %>
         </td>
       </tr>
     </table>
@@ -33,8 +36,6 @@
     </script>
     
     <br>
-    
-    <%= ((@valor_dia / 24) * 0.18).round(2) %>
     
     <table>
       <tr>

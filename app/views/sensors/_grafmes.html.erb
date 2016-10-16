@@ -1,7 +1,7 @@
 
 <div class="divform">
   <div class="row">
-    <div class="col-md-3 col-md-offset-1">
+    <div class="col-md-4 col-md-offset-1">
       
       <br>
       
@@ -25,10 +25,11 @@
               ['2028', 2028], ['2029', 2029], ['2030', 2030]
             ], {prompt: 'Selecione o ano', selected: params[:auxdata].to_date.strftime("%Y").to_i}, {class: 'form-control atualizarmes'}) %>
           </td>
+          <td>
+            <%= (((@valor_mes / 30) / 24) * 0.18).round(2) %>
+          </td>
         </tr>
       </table>
-      
-      <%= (((@valor_mes / 30) / 24) * 0.18).round(2) %>
       
       <table>
         <tr>
