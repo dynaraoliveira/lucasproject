@@ -46,17 +46,9 @@ class SensorsController < ApplicationController
     
     @sensors_dia.each do |sensor|
       
-      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
-      cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
-      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
-      
-      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
-      cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
-      
-      ts0 = cs0 * cs3
-      ts1 = cs1 * cs4
-      ts2 = cs2 * cs5
+      ts0 = sensor.sensor0 * sensor.sensor3
+      ts1 = sensor.sensor1 * sensor.sensor4
+      ts2 = sensor.sensor2 * sensor.sensor5
       ts3 = ts2 - ts1
       
       @valor_dia += ts1.to_i
@@ -129,17 +121,9 @@ class SensorsController < ApplicationController
         
       end
       
-      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
-      cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
-      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
-      
-      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
-      cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
-      
-      @ts0 += cs0 * cs3
-      @ts1 += cs1 * cs4
-      @ts2 += cs2 * cs5
+      @ts0 = sensor.sensor0 * sensor.sensor3
+      @ts1 = sensor.sensor1 * sensor.sensor4
+      @ts2 = sensor.sensor2 * sensor.sensor5
       @ts3 += @ts2 - @ts1
       
       @label = sensor.datainclusao.strftime('%F')
@@ -220,17 +204,9 @@ class SensorsController < ApplicationController
         
       end
           
-      cs0 = ((sensor.sensor0 * 220) / 1023) / 0.707
-      cs1 = ((sensor.sensor1 * 220) / 1023) / 0.707
-      cs2 = ((sensor.sensor2 * 220) / 1023) / 0.707
-      
-      cs3 = ((sensor.sensor3 * 20) / 204.6) / 0.707
-      cs4 = ((sensor.sensor4 * 20) / 204.6) / 0.707
-      cs5 = ((sensor.sensor5 * 20) / 204.6) / 0.707
-      
-      @ts0 += cs0 * cs3
-      @ts1 += cs1 * cs4
-      @ts2 += cs2 * cs5
+      @ts0 = sensor.sensor0 * sensor.sensor3
+      @ts1 = sensor.sensor1 * sensor.sensor4
+      @ts2 = sensor.sensor2 * sensor.sensor5
       @ts3 += @ts2 - @ts1
       
       @label = sensor.datainclusao.month
