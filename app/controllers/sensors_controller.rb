@@ -46,9 +46,15 @@ class SensorsController < ApplicationController
     
     @sensors_dia.each do |sensor|
       
-      ts0 = sensor.sensor0 * sensor.sensor3
-      ts1 = sensor.sensor1 * sensor.sensor4
-      ts2 = sensor.sensor2 * sensor.sensor5
+      ts0 = (sensor.sensor0 * 2.7114) * (sensor.sensor3 * 0.0246)
+      ts1 = (sensor.sensor1 * 0.09774) * sensor.sensor4
+      
+      if sensor.sensor2 >= 510
+        ts2 = (sensor.sensor2 * 0.1667) * sensor.sensor5
+      else
+        ts2 = (sensor.sensor2 * (-0.1667)) * sensor.sensor5
+      end
+      
       ts3 = ts2 - ts1
       
       @valor_dia += ts1.to_i
@@ -121,9 +127,15 @@ class SensorsController < ApplicationController
         
       end
       
-      @ts0 = sensor.sensor0 * sensor.sensor3
-      @ts1 = sensor.sensor1 * sensor.sensor4
-      @ts2 = sensor.sensor2 * sensor.sensor5
+      @ts0 = (sensor.sensor0 * 2.7114) * (sensor.sensor3 * 0.0246)
+      @ts1 = (sensor.sensor1 * 0.09774) * sensor.sensor4
+      
+      if sensor.sensor2 >= 510
+        @ts2 = (sensor.sensor2 * 0.1667) * sensor.sensor5
+      else
+        @ts2 = (sensor.sensor2 * (-0.1667)) * sensor.sensor5
+      end
+      
       @ts3 += @ts2 - @ts1
       
       @label = sensor.datainclusao.strftime('%F')
@@ -204,9 +216,15 @@ class SensorsController < ApplicationController
         
       end
           
-      @ts0 = sensor.sensor0 * sensor.sensor3
-      @ts1 = sensor.sensor1 * sensor.sensor4
-      @ts2 = sensor.sensor2 * sensor.sensor5
+      @ts0 = (sensor.sensor0 * 2.7114) * (sensor.sensor3 * 0.0246)
+      @ts1 = (sensor.sensor1 * 0.09774) * sensor.sensor4
+      
+      if sensor.sensor2 >= 510
+        @ts2 = (sensor.sensor2 * 0.1667) * sensor.sensor5
+      else
+        @ts2 = (sensor.sensor2 * (-0.1667)) * sensor.sensor5
+      end
+        
       @ts3 += @ts2 - @ts1
       
       @label = sensor.datainclusao.month
