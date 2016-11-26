@@ -52,7 +52,7 @@ class SensorsController < ApplicationController
         ts0 = (sensor.sensor2 * (-0.1667)) * (sensor.sensor3 * 0.0246)
       end
       
-      ts1 = (sensor.sensor0 * 2.7114) * (sensor.sensor1 * 0.09774)
+      ts1 = ((sensor.sensor0 * 2.7114) * (sensor.sensor1 * 0.09774) / 1000)
       
       ts2 = 0
       ts3 = 0
@@ -133,7 +133,7 @@ class SensorsController < ApplicationController
         @ts0 = (sensor.sensor2 * (-0.1667)) * (sensor.sensor3 * 0.0246)
       end
       
-      @ts1 = (sensor.sensor0 * 2.7114) * (sensor.sensor1 * 0.09774)
+      @ts1 = ((sensor.sensor0 * 2.7114) * (sensor.sensor1 * 0.09774) / 1000)
       
       @ts2 = 0
       @ts3 = 0
@@ -222,7 +222,7 @@ class SensorsController < ApplicationController
         @ts0 = (sensor.sensor2 * (-0.1667)) * (sensor.sensor3 * 0.0246)
       end
       
-      @ts1 = (sensor.sensor0 * 2.7114) * (sensor.sensor1 * 0.09774)
+      @ts1 = ((sensor.sensor0 * 2.7114) * (sensor.sensor1 * 0.09774) / 1000)
       
       @ts2 = 0
       @ts3 = 0
